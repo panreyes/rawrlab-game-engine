@@ -247,8 +247,8 @@ include_directories(${PXT_CORE_PATH}/pxtrtm/include
                     ${PXT_MODULES_PATH}/mod_ttf/
                     ${PXT_3RDPARTY}/stb/
                     ${FREETYPE_INCLUDE_DIRS}
-                    ${SDL2_INCLUDE_DIR}
-                    ${SDL2_MIXER_INCLUDE_DIRS}
+                    ${SDL3_INCLUDE_DIR}
+                    ${SDL3_MIXER_INCLUDE_DIRS}
                     ${ZLIB_INCLUDE_DIRS}
                     ${VORBIS_INCLUDE_DIR}
                     ${OPENAL_INCLUDE_DIR}

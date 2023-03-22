@@ -113,7 +113,7 @@ int gr_set_icon(GRAPH *map) {
         }
 
         SDL_SetWindowIcon(window, ico);
-        SDL_FreeSurface(ico);
+        SDL_DestroySurface(ico);
     }
 
     return 1;
@@ -193,7 +193,7 @@ int gr_set_mode(int width, int height) {
             sdl_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
         }
         if (grab_input) {
-            sdl_flags |= SDL_WINDOW_INPUT_GRABBED;
+            sdl_flags |= SDL_WINDOW_MOUSE_GRABBED;
         }
         window = SDL_CreateWindow(apptitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                   surface_width, surface_height, sdl_flags);
@@ -275,7 +275,7 @@ int gr_set_mode(int width, int height) {
     // Store the renderer info too
     SDL_GetRendererInfo(renderer, &renderer_info);
     // Store the renderer resolution
-    SDL_GetRendererOutputSize(renderer, &renderer_width, &renderer_height);
+    SDL_GetCurrentRenderOutputSize(renderer, &renderer_width, &renderer_height);
 
     // Print some debugging info on the renderer
     if(debug) {
@@ -299,7 +299,7 @@ int gr_set_mode(int width, int height) {
 
     // Enable SDL scaling, if needed
     if (renderer_width != width || renderer_height != height) {
-        SDL_RenderSetLogicalSize(renderer, width, height);
+        SDL_SetRenderLogicalPresentation(renderer, width, height);
         if(debug) {
             PXTRTM_LOG("Set logical size to: %dx%d\n", width, height);
         }
@@ -315,9 +315,9 @@ int gr_set_mode(int width, int height) {
 
     // Create a SDL_Surface for the pixel data until the complete rendering pipeline
     // is handled by SDL_Render
-    SDL_PixelFormatEnumToMasks(format, &texture_depth, &Rmask, &Gmask, &Bmask, &Amask);
+    SDL_GetMasksForPixelFormatEnum(format, &texture_depth, &Rmask, &Gmask, &Bmask, &Amask);
     if (screen) {
-        SDL_FreeSurface(screen);
+        SDL_DestroySurface(screen);
     }
     screen = SDL_CreateRGBSurface(0, width, height, texture_depth, Rmask, Gmask, Bmask, Amask);
 

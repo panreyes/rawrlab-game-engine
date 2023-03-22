@@ -24,7 +24,7 @@
  *
  */
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <jni.h>
 
 char locale[6];

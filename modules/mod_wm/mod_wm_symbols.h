@@ -31,7 +31,7 @@
 #define __MODWM_SYMBOLS_H
 
 #include <pxtdl.h>
-#include <SDL_messagebox.h>
+#include <SDL3/SDL_messagebox.h>
 
 #ifndef __PXTB__
 extern int bgd_set_title( INSTANCE * my, int * params );

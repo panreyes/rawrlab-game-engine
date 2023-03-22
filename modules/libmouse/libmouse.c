@@ -29,7 +29,7 @@
 
 /* --------------------------------------------------------------------------- */
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #include "pxtdl.h"
 #include "dlvaracc.h"
@@ -152,9 +152,9 @@ static void do_mouse_events() {
     GLODWORD(libmouse, MOUSEWHEELUP) = 0;
     GLODWORD(libmouse, MOUSEWHEELDOWN) = 0;
 
-    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_MOUSEMOTION, SDL_MOUSEWHEEL) > 0) {
+    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENT_MOUSE_MOTION, SDL_EVENT_MOUSE_WHEEL) > 0) {
         switch (e.type) {
-            case SDL_MOUSEMOTION:
+            case SDL_EVENT_MOUSE_MOTION:
                 if (e.motion.x < 0) {
                     GLOINT32(libmouse, MOUSEX) = 0;
                 } else {
@@ -175,7 +175,7 @@ static void do_mouse_events() {
                 }
                 break;
 
-            case SDL_MOUSEBUTTONDOWN:
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
                 if (e.button.button == SDL_BUTTON_LEFT)
                     GLODWORD(libmouse, MOUSELEFT) = 1;
                 if (e.button.button == SDL_BUTTON_MIDDLE)
@@ -184,7 +184,7 @@ static void do_mouse_events() {
                     GLODWORD(libmouse, MOUSERIGHT) = 1;
                 break;
 
-            case SDL_MOUSEBUTTONUP:
+            case SDL_EVENT_MOUSE_BUTTON_UP:
                 if (e.button.button == SDL_BUTTON_LEFT)
                     GLODWORD(libmouse, MOUSELEFT) = 0;
                 if (e.button.button == SDL_BUTTON_MIDDLE)
@@ -193,7 +193,7 @@ static void do_mouse_events() {
                     GLODWORD(libmouse, MOUSERIGHT) = 0;
                 break;
 
-            case SDL_MOUSEWHEEL:
+            case SDL_EVENT_MOUSE_WHEEL:
                 if (e.wheel.y > 0)
                     GLODWORD(libmouse, MOUSEWHEELUP)++;
                 else if (e.wheel.y < 0)

@@ -32,12 +32,12 @@
     #endif
 #endif
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #ifdef OPENGL_SHADERS
-    #include "SDL_opengl.h"
+    #include <SDL3/SDL_opengl.h>
 #endif
 #ifdef GLES2_SHADERS
-    #include "SDL_opengles2.h"
+    #include <SDL3/SDL_opengles2.h>
 #endif
 
 #include "libvideo.h"
@@ -56,7 +56,7 @@ static int      g_shaders_init = 0;
     typedef struct GLES2_Context
     {
     #define SDL_PROC(ret,func,params) ret (APIENTRY *func) params;
-    #include "SDL_gles2funcs.h"
+    #include <SDL3/SDL_gles2funcs.h>
     #undef SDL_PROC
     } GLES2_Context;
 
@@ -84,7 +84,7 @@ static int      g_shaders_init = 0;
         } while ( 0 );
     #endif /* __SDL_NOGETPROCADDR__ */
 
-    #include "SDL_gles2funcs.h"
+    #include <SDL3/SDL_gles2funcs.h>
     #undef SDL_PROC
         return 0;
     }

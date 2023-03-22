@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include <SDL_log.h>
+#include <SDL3/SDL_log.h>
 
 #include "libblit.h"
 #include "g_video.h"
@@ -1488,7 +1488,7 @@ void gr_rotated_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, i
         SDL_SetTextureColorMod(gr->texture, modr, modg, modb);
 
         SDL_SetTextureBlendMode(gr->texture, mode);
-        SDL_RenderSetClipRect(renderer, &clipRect);
+        SDL_SetRenderClipRect(renderer, &clipRect);
 
         #ifndef NO_MODSHADER
         if(shader>0){
@@ -1496,7 +1496,7 @@ void gr_rotated_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, i
         }
         #endif
 
-        SDL_RenderCopyEx(renderer, gr->texture, NULL, &dstRect, flip_factor * angle / -1000.,
+        SDL_RenderTextureRotated(renderer, gr->texture, NULL, &dstRect, flip_factor * angle / -1000.,
                          &rcenter, flip);
         if(gr->next_piece){
             PXTRTM_LOGERROR("WARNING: GRAPH %d is larger than supported by your graphics card.\n", gr->code);
@@ -1936,7 +1936,7 @@ void gr_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, uint8_t m
         SDL_SetTextureColorMod(gr->texture, modr, modg, modb);
 
         SDL_SetTextureBlendMode(gr->texture, mode);
-        SDL_RenderSetClipRect(renderer, &clipRect);
+        SDL_SetRenderClipRect(renderer, &clipRect);
         
         #ifndef NO_MODSHADER
         if(shader>0){
@@ -1944,7 +1944,7 @@ void gr_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, uint8_t m
         }
         #endif
         
-        SDL_RenderCopyEx(renderer, gr->texture, NULL, &dstRect, 0., NULL, flip);
+        SDL_RenderTextureRotated(renderer, gr->texture, NULL, &dstRect, 0., NULL, flip);
         
         piece = gr->next_piece;
         while (piece) {
@@ -1955,7 +1955,7 @@ void gr_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, uint8_t m
                 SDL_SetTextureColorMod(piece->texture, modr, modg, modb);
                 SDL_SetTextureBlendMode(piece->texture, mode);
                 SDL_QueryTexture(piece->texture, NULL, NULL, &dstRect.w, &dstRect.h);
-                SDL_RenderCopyEx(renderer, piece->texture, NULL, &dstRect, 0., NULL, flip);
+                SDL_RenderTextureRotated(renderer, piece->texture, NULL, &dstRect, 0., NULL, flip);
             }
             piece = piece->next;
         }

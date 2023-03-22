@@ -37,13 +37,13 @@
 
 #include "pxtdl.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <stretchy_buffer.h>
 
 #include "mod_sound.h"
 
 #ifndef NO_SDL2_MIXER
-    #include <SDL_mixer.h>
+    #include <SDL3/SDL_mixer.h>
 #endif
 
 #include "files.h"
@@ -98,14 +98,14 @@ static size_t SDLCALL __modsound_write_cb(SDL_RWops *context, const void *ptr, s
 static int SDLCALL __modsound_close_cb(SDL_RWops *context) {
     if (context) {
         file_close(context->hidden.unknown.data1);
-        SDL_FreeRW(context);
+        SDL_DestroyRW(context);
     }
 
     return (0);
 }
 
 static SDL_RWops *SDL_RWFromBGDFP(file *fp) {
-    SDL_RWops *rwops = SDL_AllocRW();
+    SDL_RWops *rwops = SDL_CreateRW();
     if (rwops != NULL) {
         rwops->seek                 = __modsound_seek_cb;
         rwops->read                 = __modsound_read_cb;

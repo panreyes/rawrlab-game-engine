@@ -29,7 +29,7 @@
 #include <xstrings.h>
 #include <pxtrtm.h>
 #include <curl/curl.h>
-#include <SDL_thread.h>
+#include <SDL3/SDL_thread.h>
 
 #ifndef MAX_DOWNLOADS
 #define MAX_DOWNLOADS 16

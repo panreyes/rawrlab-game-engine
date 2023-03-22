@@ -36,9 +36,9 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <assert.h>
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #ifdef WITH_SDLRWOPS
-#include <SDL_rwops.h>
+#include <SDL3/SDL_rwops.h>
 #endif
 
 #ifdef __NINTENDO_SWITCH__

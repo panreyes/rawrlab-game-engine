@@ -35,7 +35,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #include "pxtcore.h"
 #include "pxtrtm.h"
@@ -2089,7 +2089,7 @@ static int debug_mode_handler_cb(SDL_Keysym k) {
         //                return 1;
         //            }
 
-        //            if ( k.mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) ) {
+        //            if ( k.mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) ) {
         //                if ( k.sym == SDLK_F2 ) {
         //                    console_instance_dump_all_brief();
         //                    return 1;
@@ -2159,7 +2159,7 @@ static int debug_mode_handler_cb(SDL_Keysym k) {
         //                return 1;
         //            }
 
-        //            if ( !( k.mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) ) ) {
+        //            if ( !( k.mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) ) ) {
         //                if ( k.sym == SDLK_F5 ) {
         //                    console_do( "GO" );
         //                    return 1;
@@ -2181,7 +2181,7 @@ static int debug_mode_handler_cb(SDL_Keysym k) {
         //                }
         //            }
 
-        //            if ( !( k.mod & KMOD_LALT ) ) {
+        //            if ( !( k.mod & SDL_KMOD_LALT ) ) {
         //                console_getkey( k.sym, k.sym ) ;
         //            }
         //            return 1;
@@ -2232,8 +2232,8 @@ void __pxtexport(mod_debug, process_exec_hook)(INSTANCE *r) {
 
 void __pxtexport(mod_debug, module_initialize)() {
     if (dcb.data.NSourceFiles) {
-        hotkey_add(KMOD_LALT, SDLK_x, force_exit_cb);
-        hotkey_add(KMOD_LALT, SDLK_c, debug_mode_handler_cb);
+        hotkey_add(SDL_KMOD_LALT, SDLK_x, force_exit_cb);
+        hotkey_add(SDL_KMOD_LALT, SDLK_c, debug_mode_handler_cb);
 
         // Create socket
         console_sock = socket(AF_INET, SOCK_STREAM, 0);

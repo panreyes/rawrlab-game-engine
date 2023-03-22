@@ -40,7 +40,7 @@
 
 #include "locale/get_locale.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #ifndef __MONOLITHIC__
 #include "mod_wm_symbols.h"
@@ -175,9 +175,9 @@ void bgd_show_messagebox(INSTANCE *my, int *params) {
 
 void bgd_window_enable_text_drop(INSTANCE *my, int *params) {
     if(params[0]){
-        SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+        SDL_EventState(SDL_EVENT_DROP_FILE, SDL_ENABLE);
     } else {
-        SDL_EventState(SDL_DROPFILE, SDL_DISABLE);
+        SDL_EventState(SDL_EVENT_DROP_FILE, SDL_DISABLE);
     }
 }
 
@@ -186,7 +186,7 @@ void bgd_window_enable_text_drop(INSTANCE *my, int *params) {
 int bgd_window_get_dropped_text(INSTANCE *my, int *params) {
     int str_dropped_text;
     SDL_Event e;
-    if(SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_DROPFILE, SDL_DROPTEXT) > 0){
+    if(SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENT_DROP_FILE, SDL_EVENT_DROP_TEXT) > 0){
         str_dropped_text = string_new(e.drop.file);
         SDL_free(e.drop.file);
     } else {

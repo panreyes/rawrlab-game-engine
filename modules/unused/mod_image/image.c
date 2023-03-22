@@ -39,7 +39,7 @@
 #ifndef TARGET_WII
 #include <memory.h>
 #endif
-#include <SDL_image.h>
+#include <SDL3/SDL_image.h>
 /* BennuGD stuff */
 #include <files.h>
 #include <pxtdl.h>
@@ -85,7 +85,7 @@ enum {
 SDL_RWops *file_RWops(file *fp) {
     static SDL_RWops *sdlf;
 
-    sdlf = SDL_AllocRW();
+    sdlf = SDL_CreateRW();
     if (sdlf == NULL)
         return NULL;
 
@@ -160,7 +160,7 @@ int gr_load_image(const char *filename) {
         rwops = file_RWops(fp);
         if (rwops != NULL)
             s = IMG_Load_RW(rwops, 1);
-        SDL_FreeRW(rwops);
+        SDL_DestroyRW(rwops);
         file_close(fp);
     }
 
@@ -174,7 +174,7 @@ int gr_load_image(const char *filename) {
             // printf("Need to convert the surface to %dbpp.\n", screen->format->BitsPerPixel);
             // Duplicate the s surface to aux, free s surface
             aux = SDL_ConvertSurface(s, screen->format, 0);
-            SDL_FreeSurface(s);
+            SDL_DestroySurface(s);
             if (aux == NULL) {
                 printf("Image error: Couldn't convert the libimage");
                 return 0;
@@ -210,7 +210,7 @@ int gr_load_image(const char *filename) {
         grlib_add_map(0, gr);
 
         // Free surface and unlock it (if needed)
-        SDL_FreeSurface(s);
+        SDL_DestroySurface(s);
     } else {
         printf("Image: Couldn't load %s\n", filename);
     }
@@ -261,7 +261,7 @@ int gr_image_type(const char *filename, int type) {
         if (type & TYPE_LBM)
             result |= IMG_isLBM(rwops) ? 1 : 0;
 
-        SDL_FreeRW(rwops);
+        SDL_DestroyRW(rwops);
     }
     file_close(fp);
     return result;

@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #include "pxtdl.h"
 #include "xstrings.h"
@@ -66,7 +66,7 @@ int sensor_open(int i) {
         return i;
     }
 
-    sensor[i] = SDL_SensorOpen(i);
+    sensor[i] = SDL_OpenSensor(i);
 
     if (sensor[i]) {
         return i;
@@ -80,7 +80,7 @@ void sensor_close(int i) {
         return;
     }
 
-    SDL_SensorClose(sensor[i]);
+    SDL_CloseSensor(sensor[i]);
     sensor[i] = NULL;
 }
 
@@ -173,7 +173,7 @@ float modsensor_getaxis(INSTANCE *my, int *params) {
 
 // Update the sensor data
 void modsensor_log(INSTANCE *my, int *params) {
-    SDL_SensorUpdate();
+    SDL_UpdateSensors();
 }
 
 /* --------------------------------------------------------------------------- */

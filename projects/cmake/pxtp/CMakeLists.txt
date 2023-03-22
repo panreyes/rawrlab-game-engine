@@ -28,7 +28,7 @@ set(SOURCE_FILES
 include_directories(${PXT_CORE_PATH}/pxtp/include
                     ${PXT_CORE_PATH}/include
                     ${PXT_CORE_PATH}/pxtrtm/include/
-                    ${SDL2_INCLUDE_DIR})
+                    ${SDL3_INCLUDE_DIR})
 
 if(WIN32)
     set(EXTRA_LIBS "-lshlwapi -lwsock32 -lm")
@@ -78,8 +78,8 @@ include(compiler_flags)
 # Link the executable to the libraries
 target_link_libraries(${PROJECT_NAME}
                       pxtrtm
-                      ${SDL2_LIBRARY}
-                      ${SDL2_MIXER_LIBRARIES}
+                      ${SDL3_LIBRARY}
+                      ${SDL3_MIXER_LIBRARIES}
                       ${ZLIB_LIBRARIES}
                       ${PNG_LIBRARIES}
                       ${JPEG_LIBRARIES}

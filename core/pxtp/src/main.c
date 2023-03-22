@@ -46,7 +46,7 @@
 #include "xstrings.h"
 #include "dirs.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>

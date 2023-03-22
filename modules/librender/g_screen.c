@@ -111,7 +111,7 @@ void gr_unlock_screen() {
 
     screen_locked = 0;
 
-    SDL_RenderSetClipRect(renderer, NULL);
+    SDL_SetRenderClipRect(renderer, NULL);
     SDL_RenderPresent(renderer);
 }
 

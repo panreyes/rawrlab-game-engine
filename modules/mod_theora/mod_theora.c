@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <theoraplay.h>
 #ifdef __APPLE__
 #include <OpenAL/al.h>

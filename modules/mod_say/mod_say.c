@@ -36,7 +36,7 @@
 #include "xstrings.h"
 
 #if defined(__ANDROID__)
-#include <SDL_log.h>
+#include <SDL3/SDL_log.h>
 #endif
 
 #ifndef __MONOLITHIC__

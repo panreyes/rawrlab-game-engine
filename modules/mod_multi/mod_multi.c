@@ -26,7 +26,7 @@
 #include <strings.h>
 #include <libvideo.h>
 #include <g_video.h>
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include "pxtrtm.h"
 #include "pxtdl.h"
 #include "dlvaracc.h"
@@ -125,9 +125,9 @@ void parse_input_events() {
     }
 
     // Parse the SDL event
-    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_FINGERDOWN, SDL_FINGERMOTION) > 0) {
+    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENT_FINGER_DOWN, SDL_EVENT_FINGER_MOTION) > 0) {
         switch (e.type) {
-            case SDL_FINGERDOWN:
+            case SDL_EVENT_FINGER_DOWN:
                 // Retrive the the position in the array
                 n = get_sdlfinger_index(e.tfinger.fingerId);
 
@@ -160,7 +160,7 @@ void parse_input_events() {
                 }*/
                 break;
 
-            case SDL_FINGERMOTION:
+            case SDL_EVENT_FINGER_MOTION:
                 // Retrive the touch state, the finger id and the position in the array
                 n = get_sdlfinger_index(e.tfinger.fingerId);
 
@@ -186,7 +186,7 @@ void parse_input_events() {
                 }*/
                 break;
 
-            case SDL_FINGERUP:
+            case SDL_EVENT_FINGER_UP:
                 // Retrive the touch state, the finger id and the position in the array
                 n = get_sdlfinger_index(e.tfinger.fingerId);
 
@@ -257,9 +257,9 @@ void __pxtexport(mod_multi, module_initialize)() {
 /* ----------------------------------------------------------------- */
 
 /*
- SDL_FINGERDOWN      = 0x700,
- SDL_FINGERUP,
- SDL_FINGERMOTION,
+ SDL_EVENT_FINGER_DOWN      = 0x700,
+ SDL_EVENT_FINGER_UP,
+ SDL_EVENT_FINGER_MOTION,
  SDL_TOUCHBUTTONDOWN,
  SDL_TOUCHBUTTONUP,
 

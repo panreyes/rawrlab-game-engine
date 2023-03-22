@@ -30,7 +30,7 @@
 #ifndef __FADE_H
 #define __FADE_H
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 extern int fade_on;   /* ¿Hay un fade activo?                  */
 extern int fade_set;  /* ¿Hay un fade seteado pero inactivo?   */

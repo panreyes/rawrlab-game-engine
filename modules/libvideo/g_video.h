@@ -30,7 +30,7 @@
 #ifndef __G_VIDEO_H
 #define __G_VIDEO_H
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #include "libgrbase.h"
 #include "g_video_constants.h"

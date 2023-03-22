@@ -31,7 +31,7 @@
 #define __JOY_H
 
 #include <pxtdl.h>
-#include <SDL_joystick.h>
+#include <SDL3/SDL_joystick.h>
 
 #ifndef __PXTB__
 extern void __pxtexport( libjoy, module_initialize )();

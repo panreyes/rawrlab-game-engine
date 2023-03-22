@@ -87,7 +87,7 @@ include_directories(${PXT_CORE_PATH}/pxtb/include
                     ${pxtb_SOURCE_DIR}/../../../modules/mod_sys/
                     ${pxtb_SOURCE_DIR}/../../../modules/mod_shader/
                     ${pxtb_SOURCE_DIR}/../../../modules/mod_chipmunk/
-                    ${SDL2_INCLUDE_DIR}
+                    ${SDL3_INCLUDE_DIR}
                     ${ZLIB_INCLUDE_DIRS})
 
 # Optional modules

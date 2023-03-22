@@ -27,9 +27,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <SDL.h>
-#include <SDL_joystick.h>
-#include <SDL_gamecontroller.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_joystick.h>
+#include <SDL3/SDL_gamepad.h>
 #include <stretchy_buffer.h>
 
 /* --------------------------------------------------------------------------- */
@@ -45,7 +45,7 @@
 
 /* --------------------------------------------------------------------------- */
 
-static SDL_GameController **open_controllers = NULL;
+static SDL_Gamepad **open_controllers = NULL;
 
 /* --------------------------------------------------------------------------- */
 
@@ -65,7 +65,7 @@ static SDL_GameController **open_controllers = NULL;
  *
  */
 
-static int find_free_controllerID(SDL_GameController **where) {
+static int find_free_controllerID(SDL_Gamepad **where) {
     int32_t i = 0, len = 0;
 
     // Try to find an empty spot (the pointer should be NULL there)
@@ -102,13 +102,13 @@ int check_controller_id(int id) {
         return 0;
     }
 
-    return SDL_GameControllerGetAttached(open_controllers[id]);
+    return SDL_GamepadConnected(open_controllers[id]);
 }
 
 /* --------------------------------------------------------------------------- */
 void controller_close(int index) {
     if (check_controller_id(index)) {
-        SDL_GameControllerClose(open_controllers[index]);
+        SDL_CloseGamepad(open_controllers[index]);
         open_controllers[index] = NULL;
     }
 }
@@ -123,7 +123,7 @@ int modgamecontroller_getaxis(INSTANCE *my, int *params) {
         return CONTROLLER_INVALID;
     }
 
-    return SDL_GameControllerGetAxis(open_controllers[id], axis);
+    return SDL_GetGamepadAxis(open_controllers[id], axis);
 }
 
 int modgamecontroller_getbutton(INSTANCE *my, int *params) {
@@ -134,7 +134,7 @@ int modgamecontroller_getbutton(INSTANCE *my, int *params) {
         return CONTROLLER_INVALID;
     }
 
-    return SDL_GameControllerGetButton(open_controllers[id], button);
+    return SDL_GetGamepadButton(open_controllers[id], button);
 }
 
 int modgamecontroller_getname(INSTANCE *my, int *params) {
@@ -147,7 +147,7 @@ int modgamecontroller_getname(INSTANCE *my, int *params) {
         return str;
     }
 
-    str = string_new(SDL_GameControllerName(open_controllers[id]));
+    str = string_new(SDL_GetGamepadName(open_controllers[id]));
     string_use(str);
 
     return str;
@@ -158,7 +158,7 @@ int modgamecontroller_num(INSTANCE *my, int *params) {
     int game_controllers = 0;
     
     for (i = 0; i < SDL_NumJoysticks(); ++i) {
-        if (SDL_IsGameController(i)) {
+        if (SDL_IsGamepad(i)) {
             game_controllers++;
         }
     }
@@ -179,11 +179,11 @@ int modgamecontroller_close(INSTANCE *my, int *params) {
 }
 
 int modgamecontroller_open(INSTANCE *my, int *params) {
-    SDL_GameController *controller;
+    SDL_Gamepad *controller;
     int n, index = params[0];
 
-    if (SDL_IsGameController(index)) {
-        controller = SDL_GameControllerOpen(index);
+    if (SDL_IsGamepad(index)) {
+        controller = SDL_OpenGamepad(index);
         n = find_free_controllerID(open_controllers);
         if (n >= 0) {
             open_controllers[n] = controller;
@@ -236,7 +236,7 @@ int modgamecontroller_rumble( INSTANCE * my, int * params ) {
         high_frequency_rumble = 255;
     }
     
-    return SDL_GameControllerRumble(open_controllers[id],
+    return SDL_RumbleGamepad(open_controllers[id],
                                     (Uint16) (low_frequency_rumble * 65535 / 255),
                                     (Uint16) (high_frequency_rumble * 65535 / 255),
                                     (Uint32) duration);
@@ -262,8 +262,8 @@ void __pxtexport(mod_gamecontroller, module_initialize)() {
     }
 */
     
-    if (!SDL_WasInit(SDL_INIT_GAMECONTROLLER)) {
-        SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
+    if (!SDL_WasInit(SDL_INIT_GAMEPAD)) {
+        SDL_InitSubSystem(SDL_INIT_GAMEPAD);
     }
 }
 
@@ -278,7 +278,7 @@ void __pxtexport(mod_gamecontroller, module_finalize)() {
     }
     sb_free(open_controllers);
 
-    if (SDL_WasInit(SDL_INIT_GAMECONTROLLER)) {
-        SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
+    if (SDL_WasInit(SDL_INIT_GAMEPAD)) {
+        SDL_QuitSubSystem(SDL_INIT_GAMEPAD);
     }
 }

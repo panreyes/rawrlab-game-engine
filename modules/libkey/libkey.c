@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #include "pxtrtm.h"
 #include "xctype.h"
@@ -309,9 +309,9 @@ static void process_key_events() {
         GLODWORD(libkey, SCANCODE) = 0;
     }
 
-    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_KEYDOWN, SDL_KEYUP) > 0) {
+    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENT_KEY_DOWN, SDL_EVENT_KEY_UP) > 0) {
         switch (e.type) {
-            case SDL_KEYDOWN:
+            case SDL_EVENT_KEY_DOWN:
                 ignore_key = 0;
                 /* KeyDown HotKey */
                 if (hotkey_count) {
@@ -339,7 +339,7 @@ static void process_key_events() {
 
                         /* capital ascii */
                         if (asc >= 'a' && asc <= 'z' &&
-                            (m & KMOD_LSHIFT || m & KMOD_RSHIFT || keystate[SDL_SCANCODE_CAPSLOCK])) {
+                            (m & SDL_KMOD_LSHIFT || m & SDL_KMOD_RSHIFT || keystate[SDL_SCANCODE_CAPSLOCK])) {
                             asc -= 0x20;
                         }
                     } else {
@@ -355,7 +355,7 @@ static void process_key_events() {
 
                         /* capital ascii */
                         if (asc >= 'a' && asc <= 'z' &&
-                            (m & KMOD_LSHIFT || m & KMOD_RSHIFT || keystate[SDL_SCANCODE_CAPSLOCK])) {
+                            (m & SDL_KMOD_LSHIFT || m & SDL_KMOD_RSHIFT || keystate[SDL_SCANCODE_CAPSLOCK])) {
                             asc -= 0x20;
                         }
                     } else {
@@ -369,7 +369,7 @@ static void process_key_events() {
 
                 break;
 
-            case SDL_KEYUP:
+            case SDL_EVENT_KEY_UP:
                 /* Do nothing, PixTudio is key_up insensitive */
                 break;
         }
@@ -385,12 +385,12 @@ static void process_key_events() {
 
     /* Now updated every frame... */
     GLODWORD(libkey, SHIFTSTATUS) =
-        ((m & KMOD_RSHIFT) ? STAT_RSHIFT : 0) | ((m & KMOD_LSHIFT) ? STAT_LSHIFT : 0) |
-        ((m & KMOD_CTRL) ? STAT_CTRL : 0) | ((m & KMOD_ALT) ? STAT_ALT : 0) |
-        ((m & KMOD_RCTRL) ? STAT_RCTRL : 0) | ((m & KMOD_LCTRL) ? STAT_LCTRL : 0) |
-        ((m & KMOD_RALT) ? STAT_RALT : 0) | ((m & KMOD_LALT) ? STAT_LALT : 0) |
-        ((m & KMOD_NUM) ? STAT_NUM : 0) | ((m & KMOD_CAPS) ? STAT_CAPS : 0) |
-        ((m & KMOD_SHIFT) ? STAT_SHIFT : 0);
+        ((m & SDL_KMOD_RSHIFT) ? STAT_RSHIFT : 0) | ((m & SDL_KMOD_LSHIFT) ? STAT_LSHIFT : 0) |
+        ((m & SDL_KMOD_CTRL) ? STAT_CTRL : 0) | ((m & SDL_KMOD_ALT) ? STAT_ALT : 0) |
+        ((m & SDL_KMOD_RCTRL) ? STAT_RCTRL : 0) | ((m & SDL_KMOD_LCTRL) ? STAT_LCTRL : 0) |
+        ((m & SDL_KMOD_RALT) ? STAT_RALT : 0) | ((m & SDL_KMOD_LALT) ? STAT_LALT : 0) |
+        ((m & SDL_KMOD_NUM) ? STAT_NUM : 0) | ((m & SDL_KMOD_CAPS) ? STAT_CAPS : 0) |
+        ((m & SDL_KMOD_SHIFT) ? STAT_SHIFT : 0);
 }
 
 /* ---------------------------------------------------------------------- */

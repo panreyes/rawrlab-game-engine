@@ -49,7 +49,7 @@
 #endif
 
 #ifdef WITH_SDLRWOPS
-#include <SDL_rwops.h>
+#include <SDL3/SDL_rwops.h>
 #endif
 
 #ifdef _WIN32

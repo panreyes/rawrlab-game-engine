@@ -27,7 +27,7 @@
 
 #include "pxtdl.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #ifndef __MONOLITHIC__
 #include "libsdlhandler_symbols.h"
@@ -43,12 +43,12 @@ void dump_new_events() {
     // We'll only discard events that no module knows how to handle here...
     // Otherwise some events seem to get discarded
 	
-    SDL_FlushEvents(SDL_SYSWMEVENT, SDL_SYSWMEVENT);
-    SDL_FlushEvents(SDL_TEXTEDITING, SDL_TEXTINPUT);
-    SDL_FlushEvents(SDL_JOYDEVICEADDED, SDL_CONTROLLERDEVICEREMAPPED);
-    SDL_FlushEvents(SDL_DOLLARGESTURE, SDL_LASTEVENT);
-	SDL_FlushEvents(SDL_JOYAXISMOTION,SDL_JOYDEVICEREMOVED);
-    SDL_FlushEvents(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLERDEVICEREMAPPED);
+    SDL_FlushEvents(SDL_EVENT_SYSWM, SDL_EVENT_SYSWM);
+    SDL_FlushEvents(SDL_EVENT_TEXT_EDITING, SDL_EVENT_TEXT_INPUT);
+    SDL_FlushEvents(SDL_EVENT_JOYSTICK_ADDED, SDL_EVENT_GAMEPAD_REMAPPED);
+    SDL_FlushEvents(SDL_DOLLARGESTURE, SDL_EVENT_LAST);
+	SDL_FlushEvents(SDL_EVENT_JOYSTICK_AXIS_MOTION,SDL_EVENT_JOYSTICK_REMOVED);
+    SDL_FlushEvents(SDL_EVENT_GAMEPAD_AXIS_MOTION, SDL_EVENT_GAMEPAD_REMAPPED);
 	
     /* Get new events */
     SDL_PumpEvents();

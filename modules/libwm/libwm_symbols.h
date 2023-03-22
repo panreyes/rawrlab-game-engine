@@ -34,7 +34,7 @@
 
 /* --------------------------------------------------------------------------- */
 char __pxtexport( libwm, globals_def )[] =
-    "exit_status = 0;\n"                /* SDL_QUIT status */
+    "exit_status = 0;\n"                /* SDL_EVENT_QUIT status */
     "window_status = 1;\n"              /* MINIMIZED:0 VISIBLE:1 */
     "focus_status = 1;\n"               /* FOCUS status */
     "mouse_status = 1;\n";              /* MOUSE status (INSIDE WINDOW:1) */

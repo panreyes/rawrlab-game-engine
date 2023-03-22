@@ -47,7 +47,7 @@
 #endif
 
 // I need this for prefpath and basepath
-#include <SDL_filesystem.h>
+#include <SDL3/SDL_filesystem.h>
 
 #include "pxtdl.h"
 #include "dlvaracc.h"
