@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PixTudio</title>
+        <meta name="description" content="PixTudio game engine description page.">
+        <meta name="author" content="Joseba García Etxebarria"/>
+        <link rel="stylesheet" href="main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    </head>
+    <body>
+    <ul class="nav">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#showcase">Showcase</a></li>
+        <li><a href="/docs">Docs</a></li>
+        <li><a href="#project_page">Project page</a></li>
+        <li><a href="#compiling">Compiling</a></li>
+        <li><a href="#bugs">Bugs</a></li>
+        <li><a href="#links">Links</a></li>
+    </ul>
+    <h1 id="intro">PixTudio</h1>
+    <h2>Introduction</h2>
+    <p>
+        PixTudio is a 2D game engine for Windows, Linux, macOS, Android, iOS &amp; Nintendo Switch.
+    </p>
+    <p>
+        <a href="http://opensource.org/licenses/Zlib">
+            <img src="img/osi_keyhole_100X100_90ppi.png" alt="Open Source software" class="logo"/>
+        </a>
+        The game engine is licensed under the very permissive
+        <a href="http://opensource.org/licenses/Zlib">zlib license</a>, which means that you're free to
+        use it in both open-source and closed-source projects.
+    </p>
+    <p>
+        It is also very easy to use. The main execution units in PixTudio are called processes.
+        Processes are like functions with properties you can set freely.<br/>
+        The following example shows the code for a simple process named "enemy" whose graphic
+        is loaded from a PNG file and is positioned at coordinates (x, y) = (100, 200).
+        <code style="white-space: pre;"><b>Process</b> enemy()
+<b>Begin</b>
+    graph = image_load("img/enemy.png");
+    x = 100; y = 200;
+    <b>LOOP</b>
+        <b>FRAME;</b>
+    <b>End</b>
+<b>End</b></code>
+    </p>
+
+    <h2 id="showcase">Games showcase</h2>
+    <h3>eXplosive Dinosaurs</h3>
+    <p>
+        Collection of +30 FRIENDSHIP DESTROYER COMPETITIVE MINIGAMES, up to 4 players.
+        The main objective of this videogame is to DESTROY FRIENDSHIPS THROUGH PURE
+        COMPETITION.
+    </p>
+    <p>
+        You can purchase the game from <a href="https://store.steampowered.com/app/671150/Explosive_Dinosaurs/">its Steam portal</a>.
+    </p>
+    <p style="text-align: center">
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/P4-i8XZsGQQ"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+    </p>
+    <h2 id="project_page">Project page</h2>
+    <p>
+        Check out the project page at
+        <a href="https://gitlab.com/josebagar/pixtudio">GitLab</a>.
+    </p>
+
+    <h2 id="compiling">Compiling PixTudio from source code</h2>
+
+    <h3>Fedora 24 Workstation</h3>
+    <p>
+        These instructions might work in earlier versions of Fedora and in other Fedora
+        spins, too, but have only been tested in a fully updated fresh installation of
+        Fedora 24 Workstation 64-bit.
+    </p>
+    <ul>
+        <li>Open a terminal</li>
+        <li>
+            Install the required command line utilities.
+            <code>sudo dnf group install "Development Tools"
+                sudo dnf install cmake ninja-build
+            </code>
+        </li>
+        <li>
+            Install the required dependencies.
+            <code>sudo dnf install SDL2-devel.i686 SDL2_mixer-devel.i686 libpng-devel.i686 zlib-devel.i686 libogg-devel.i686 libvorbis-devel.i686 libtheora-devel.i686 tre.i686 tre-devel.i686 sqlite-devel.i686 libcurl-devel.i686 openal-soft-devel.i686 freetype-devel.i686 glibc-devel.i686 libjpeg-turbo-devel.i686 libwebp-devel.i686
+            </code>
+        </li>
+        <li>
+            If you're going to package Android games, install ncurses-compat-libs, too.
+            <code>sudo dnf install ncurses-compat-libs
+            </code>
+        </li>
+        <li>
+            Clone the source code repository.
+            <code>git clone https://gitlab.com/josebagar/pixtudio.git
+            </code>
+        </li>
+        <li>
+            If you want basic <a href="http://store.steampowered.com/">Steam</a> integration, download the SDK from
+            <a href="https://partner.steamgames.com/">here</a>
+            and unzip it to the '3rdparty' dir, then rename the uncrompressed folder to "steamworks".
+            <code>cd pixtudio/3rdparty
+                unzip [DOWNLOAD_PATH]/steamworks_sdk_142.zip
+                mv sdk steamworks
+            </code>
+        </li>
+        <li>
+            Compile the source code.
+            <code>cd pixtudio/projects/cmake
+                ./build.sh Release
+            </code>
+            If you want to manually specify the location of a non-systemwide SDL2 installation,
+            you can set the SDL2DIR environment variable.
+            <code>cd pixtudio/projects/cmake
+                SDL2DIR=[SDL2_INSTALL_PATH] ./build.sh Release
+            </code>
+        </li>
+        <li>
+            The binaries should be in bin/gnulinux32.
+        </li>
+    </ul>
+
+    <h3>Ubuntu 20.04 LTS</h3>
+    <p>
+        These instructions might work in earlier versions of Ubuntu and in other Ubuntu
+        flavours, too, but have only been tested in a fresh installation of Ubuntu 20.04 Desktop
+        (64-bit).
+    </p>
+    <ul>
+        <li>Open a terminal</li>
+
+        <li>
+            Add i386 architecture.
+            <code>sudo dpkg --add-architecture i386
+            </code>
+        </li>
+        
+        <li>
+            Install the required command line utilities.
+            <code>sudo apt update
+                sudo apt install git cmake ninja-build g++
+            </code>
+        </li>
+        <li>
+            Install the required dependencies.
+            <code>sudo apt install libsdl2-dev:i386 libsdl2-mixer-dev:i386 libpng-dev:i386 zlib1g-dev:i386 libogg-dev:i386 libvorbis-dev:i386 libtheora-dev:i386 libsqlite3-dev:i386 libcurl4-gnutls-dev:i386 libopenal-dev:i386 libfreetype6-dev:i386 libwebp-dev:i386 libjpeg-turbo8-dev:i386 libc6-dev-i386
+            </code>
+        </li>
+        <li>
+            Manually download and install libtre5 and libtre-dev packages (not available in Ubuntu 20.04).
+            <code>
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/t/tre/libtre5_0.8.0-6_i386.deb
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/t/tre/libtre-dev_0.8.0-6_i386.deb
+                sudo dpkg -i libtre5_0.8.0-6_i386.deb
+                sudo dpkg -i libtre-dev_0.8.0-6_i386.deb			
+            </code>
+        </li>
+        <li>
+            Clone the source code repository.
+            <code>git clone https://gitlab.com/josebagar/pixtudio.git
+            </code>
+        </li>
+        <li>
+            If you want basic <a href="http://store.steampowered.com/">Steam</a> integration, download the SDK from
+            <a href="https://partner.steamgames.com/">here</a>
+            and unzip it to the '3rdparty' dir, then rename the uncrompressed folder to "steamworks".
+            <code>cd pixtudio/3rdparty
+                unzip [DOWNLOAD_PATH]/steamworks_sdk_142.zip
+                mv sdk steamworks
+            </code>
+        </li>
+        <li>
+            Compile the source code.
+            <code>cd pixtudio/projects/cmake
+                ./build.sh Release
+            </code>
+            If you want to manually specify the location of a non-systemwide SDL2 installation,
+            you can set the SDL2DIR environment variable.
+            <code>cd pixtudio/projects/cmake
+                SDL2DIR=[SDL2_INSTALL_PATH] ./build.sh Release
+            </code>
+        </li>
+        <li>
+            The binaries should be in bin/gnulinux32.
+        </li>
+    </ul>
+    
+
+    <h3>Ubuntu 18.04 LTS</h3>
+    <p>
+        These instructions might work in earlier versions of Ubuntu and in other Ubuntu
+        flavours, too, but have only been tested in a fresh installation of Ubuntu 18.04 Desktop
+        (64-bit).
+    </p>
+    <ul>
+        <li>Open a terminal</li>
+
+        <li>
+            Add i386 architecture.
+            <code>sudo dpkg --add-architecture i386
+            </code>
+        </li>
+
+        <li>
+            PixTudio requires at least SDL2 2.0.10 at least but Ubuntu 18.04 includes SDL2 2.0.8. Use this PPA to have it in Ubuntu 18.04.
+            <code>sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport
+            </code>
+        </li>		
+        
+        <li>
+            Install the required command line utilities.
+            <code>sudo apt update
+                sudo apt install git cmake ninja-build g++
+            </code>
+        </li>
+        <li>
+            Install the required dependencies.
+            <code>sudo apt install libsdl2-dev:i386 libsdl2-mixer-dev:i386 libpng-dev:i386 zlib1g-dev:i386 libogg-dev:i386 libvorbis-dev:i386 libtheora-dev:i386 libtre-dev:i386 libsqlite3-dev:i386 libcurl4-gnutls-dev:i386 libopenal-dev:i386 libfreetype6-dev:i386 libwebp-dev:i386 libjpeg-turbo8-dev:i386 libc6-dev-i386
+            </code>
+        </li>
+        <li>
+            Manually download and install libtre5 and libtre-dev packages (not available in Ubuntu 20.04).
+            <code>wget http://mirrors.kernel.org/ubuntu/pool/universe/t/tre/libtre5_0.8.0-6_i386.deb
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/t/tre/libtre-dev_0.8.0-6_i386.deb
+                sudo dpkg -i libtre5_0.8.0-6_i386.deb
+                sudo dpkg -i libtre-dev_0.8.0-6_i386.deb			
+            </code>
+        </li>
+        <li>
+            Clone the source code repository.
+            <code>git clone https://gitlab.com/josebagar/pixtudio.git
+            </code>
+        </li>
+        <li>
+            If you want basic <a href="http://store.steampowered.com/">Steam</a> integration, download the SDK from
+            <a href="https://partner.steamgames.com/">here</a>
+            and unzip it to the '3rdparty' dir, then rename the uncrompressed folder to "steamworks".
+            <code>cd pixtudio/3rdparty
+                unzip [DOWNLOAD_PATH]/steamworks_sdk_142.zip
+                mv sdk steamworks
+            </code>
+        </li>
+        <li>
+            Compile the source code.
+            <code>cd pixtudio/projects/cmake
+                ./build.sh Release
+            </code>
+            If you want to manually specify the location of a non-systemwide SDL2 installation,
+            you can set the SDL2DIR environment variable.
+            <code>cd pixtudio/projects/cmake
+                SDL2DIR=[SDL2_INSTALL_PATH] ./build.sh Release
+            </code>
+        </li>
+        <li>
+            The binaries should be in bin/gnulinux32.
+        </li>
+    </ul>
+
+    <h3>Ubuntu 16.04 LTS</h3>
+    <p>
+        These instructions might work in earlier versions of Ubuntu and in other Ubuntu
+        flavours, too, but have only been tested in a fresh installation of Ubuntu 16.04 Desktop
+        (64-bit).
+    </p>
+    <ul>
+        <li>Open a terminal</li>
+        <li>
+            Install the required command line utilities.
+            <code>sudo apt update
+                sudo apt install git cmake ninja-build
+            </code>
+        </li>
+        <li>
+            Install the required dependencies.
+            <code>sudo apt install libsdl2-dev:i386 libsdl2-mixer-dev:i386 libpng12-dev:i386 zlib1g-dev:i386 libogg-dev:i386 libvorbis-dev:i386 libtheora-dev:i386 libtre-dev:i386 libsqlite3-dev:i386 libcurl4-gnutls-dev:i386 libopenal-dev:i386 libfreetype6-dev:i386 libwebp-dev:i386 libjpeg-turbo8-dev:i386 libc6-dev-i386
+            </code>
+        </li>
+        <li>
+            Clone the source code repository.
+            <code>git clone https://gitlab.com/josebagar/pixtudio.git
+            </code>
+        </li>
+        <li>
+            If you want basic <a href="http://store.steampowered.com/">Steam</a> integration, download the SDK from
+            <a href="https://partner.steamgames.com/">here</a>
+            and unzip it to the '3rdparty' dir, then rename the uncrompressed folder to "steamworks".
+            <code>cd pixtudio/3rdparty
+                unzip [DOWNLOAD_PATH]/steamworks_sdk_142.zip
+                mv sdk steamworks
+            </code>
+        </li>
+        <li>
+            Compile the source code.
+            <code>cd pixtudio/projects/cmake
+                ./build.sh Release
+            </code>
+            If you want to manually specify the location of a non-systemwide SDL2 installation,
+            you can set the SDL2DIR environment variable.
+            <code>cd pixtudio/projects/cmake
+                SDL2DIR=[SDL2_INSTALL_PATH] ./build.sh Release
+            </code>
+        </li>
+        <li>
+            The binaries should be in bin/gnulinux32.
+        </li>
+    </ul>
+
+    <h3>macOS</h3>
+    <p>
+        Building for macOS Mojave is broken as of now; the instructions below are left as a reference.
+    </p>
+    <ul>
+        <li>
+            Open a Terminal and execute the following command to check for the Xcode command line
+            tools:
+            <code>clang</code>
+            If the output reads like the following the developer tools are already installed in
+            your computer and you can skip to the next step:
+            <code>clang: error: no input files</code>
+            Otherwise, the following message will be displayed and a dialog will be opened
+            offering to install either Xcode or the command line tools. Both should work.
+            <code>xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose
+                and option in the dialog to download the command line developer tools.</code>
+            Close that terminal.
+        </li>
+        <li>
+            Install <a href="https://www.macports.org/install.php">MacPorts</a>.
+            <a href="http://brew.sh/">Homebrew</a> will probably work, too, but you'll have to
+            adapt the instructions below.
+        </li>
+        <li>
+            Open a new terminal and install the required MacPorts dependencies.
+            <code>sudo port install libsdl2 libsdl2_mixer libpng zlib libogg libvorbis libtheora libmikmod tre smpeg2 curl chipmunk freetype webp libjpeg-turbo ninja cmake
+            </code>
+        </li>
+        <li>
+            Clone the source code repository.
+            <code>git clone https://gitlab.com/josebagar/pixtudio.git
+            </code>
+        </li>
+        <li>
+            If you want basic <a href="http://store.steampowered.com/">Steam</a> integration, download the SDK from
+            <a href="https://partner.steamgames.com/">here</a>
+            and unzip it to the '3rdparty' dir, then rename the uncrompressed folder to "steamworks".
+            <code>cd pixtudio/3rdparty
+                unzip [DOWNLOAD_PATH]/steamworks_sdk_142.zip
+                mv sdk steamworks
+            </code>
+        </li>
+        <li>
+            Compile the source code.
+            <code>cd pixtudio/projects/cmake
+                ./build.sh Release
+            </code>
+            If you want to manually specify the location of a non-systemwide SDL2 installation,
+            you can set the SDL2DIR environment variable.
+            <code>cd pixtudio/projects/cmake
+                SDL2DIR=[SDL2_INSTALL_PATH] ./build.sh Release
+            </code>
+        </li>
+        <li>
+            The binaries should be in bin/osx32.
+        </li>
+    </ul>
+
+    <h3>Windows 10</h3>
+    <p>
+        These instructions should work in earlier versions of Windows (as long as they're supported by Microsoft), but have
+        only been tested in Windows 10.
+    </p>
+    <ul>
+        <li>Install <a href="http://msys2.github.io/">MSYS2</a> (don't forget
+            to update it as described in the project page).
+        </li>
+        <li>Open <b>MinGW-w64 Win32 Shell</b> (not MSYS2 Shell!)</li>
+        <li>
+            Install the required command line and development tools.
+            <code>pacman -S msys/git mingw32/mingw-w64-i686-gcc mingw32/mingw-w64-i686-pkg-config mingw32/mingw-w64-i686-cmake mingw32/mingw-w64-i686-ninja
+            </code>
+        </li>
+        <li>
+            Install the required dependencies.
+            <code>pacman -S mingw32/mingw-w64-i686-SDL2 mingw32/mingw-w64-i686-SDL2_mixer mingw32/mingw-w64-i686-libpng mingw32/mingw-w64-i686-zlib mingw32/mingw-w64-i686-libogg mingw32/mingw-w64-i686-libvorbis mingw32/mingw-w64-i686-libtheora mingw32/mingw-w64-i686-libmodplug mingw32/mingw-w64-i686-libmikmod mingw32/mingw-w64-i686-libtre-git mingw32/mingw-w64-i686-flac mingw32/mingw-w64-i686-sqlite3 mingw32/mingw-w64-i686-curl mingw32/mingw-w64-i686-chipmunk mingw32/mingw-w64-i686-openal mingw32/mingw-w64-i686-freetype mingw32/mingw-w64-i686-libxml2 mingw32/mingw-w64-i686-libjpeg mingw32/mingw-w64-i686-libwebp
+            </code>
+        </li>
+        <li>
+            Clone the source code repository.
+            <code>git clone https://gitlab.com/josebagar/pixtudio.git
+            </code>
+        </li>
+        <li>
+            If you want basic <a href="http://store.steampowered.com/">Steam</a> integration, download the SDK from
+            <a href="https://partner.steamgames.com/">here</a>
+            and unzip it to the '3rdparty' dir, then rename the uncrompressed folder to "steamworks".
+            <code>cd pixtudio/3rdparty
+                unzip [DOWNLOAD_PATH]/steamworks_sdk_142.zip
+                mv sdk steamworks
+            </code>
+        </li>
+        <li>
+            Compile the source code.
+            <code>cd pixtudio/projects/cmake
+                ./build.sh Release
+            </code>
+            If you want to manually specify the location of a non-systemwide SDL2 installation,
+            you can set the SDL2DIR environment variable.
+            <code>cd pixtudio/projects/cmake
+                SDL2DIR=[SDL2_INSTALL_PATH] ./build.sh Release
+            </code>
+        </li>
+        <li>
+            The binaries should be in bin/win32.
+        </li>
+    </ul>
+
+    <h3>Android</h3>
+    <p>
+        Install both the <a href="http://developer.android.com/sdk/index.html">Android SDK</a>
+        &amp; the <a href="http://developer.android.com/tools/sdk/ndk/index.html">NDK</a>.
+    </p>
+
+    <p>
+        Please note that in order to compile PixTudio for Android yourself you don't need really need
+        Android Studio, only its SDK parts, but you might want to install the full Android Studio if
+        you're planning to develop other Android apps.
+    </p>
+    <p>
+        Install the Android 4.4.2 (API 19) SDK platform and -optionally- an emulator image from the
+        Android SDK manager.
+    </p>
+    <p>
+        Download the PixTudio source code with Git (see instructions in the native compilation
+        section).
+    </p>
+    <p>
+        Edit projects/android/local.properties and change the sdk.dir property to point to your
+        Android SDK installation dir.
+    </p>
+    <p>
+        If you want to install your game into a real Android device, be sure to
+        <a href="http://developer.android.com/tools/device.html">enable
+            USB debugging</a> during your development session and connect your device
+        to your computer with a USB cable.
+    </p>
+    <p>
+        If you're going to develop in an emulator image,
+        <a href="http://developer.android.com/tools/devices/index.html">create one</a>
+        and start it now.
+    </p>
+    <p>
+        Open a command line in the main PixTudio source code folder. Then do:
+    </p>
+    <ul>
+        <li>
+            Go to the Android project folder:
+            <code>cd projects/android</code>
+        </li>
+        <li>
+            If you're using the Windows cmd.exe console, compile the C source code with:
+            <code>ndk-build.cmd</code>
+            Otherwise, compile it with:
+            <code>ndk-build</code>
+        </li>
+        <li>
+            Copy your game's resources into the "assets" folder and make sure to name
+            the main DCB file (compiled with a desktop version of PixTudio) "main.dcb".<br/>
+            Typically, PixTudio resource files (FPG, MAP &amp; FNT files) will actually be
+            compressed in gzip format. PixTudio for Android cannot read compressed files
+            from within APK files, so make sure that they are uncompressed.
+        </li>
+        <li>
+            Compile the libraries, assets &amp; Java code into an APK.
+            <code>ant debug</code>
+            Or compile the libraries, assets &amp; Java code into an APK and install it in
+            an attached Android device or emulator.
+            <code>ant debug install</code>
+        </li>
+    </ul>
+
+    <h3>iOS</h3>
+    <p>
+        Install the latest version of
+        <a href="https://itunes.apple.com/es/app/xcode/id497799835?mt=12#">Xcode</a> from Apple.
+    </p>
+
+    <p>
+        Please note that PixTudio for iOS is still a work in progress project.
+    </p>
+
+    <h2 id="bugs">Bugs</h2>
+    <p>
+        Do you believe you found a bug? Report it at the
+        <a href="https://gitlab.com/josebagar/pixtudio/issues">GitLab bugtrack</a>.
+    </p>
+
+    <h2 id="links">Some links</h2>
+    <ul>
+        <li><a href="http://forum.bennugd.org/index.php?board=97.0">PixTudio forum</a></li>
+    </ul>
+
+    </body>
+</html>
