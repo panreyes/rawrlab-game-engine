@@ -307,7 +307,7 @@ int gr_set_mode(int width, int height) {
     // Enable SDL scaling, if needed
     if (renderer_width != width || renderer_height != height) {
 		//FIXME: scale_mode, last param
-		SDL_SetRenderLogicalPresentation(renderer, width, height, SDL_LOGICAL_PRESENTATION_INTEGER_SCALE, SDL_SCALEMODE_NEAREST);
+		SDL_SetRenderLogicalPresentation(renderer, width, height, SDL_LOGICAL_PRESENTATION_DISABLED, SDL_SCALEMODE_NEAREST);
 		// FIXME! Find out about SDL_LOGICAL_PRESENTATION_INTEGER_SCALE and SDL_LOGICAL_PRESENTATION_DISABLED
         if(debug) {
             PXTRTM_LOG("Set logical size to: %dx%d\n", width, height);

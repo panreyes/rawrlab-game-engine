@@ -148,6 +148,8 @@ void scroll_start(int n, int fileid, int graphid, int backid, int region, int fl
         }
 
         scrolls_objects[n] = (int)gr_new_object(0, info_scroll, scroll_draw, n);
+		// FIXME: The parameters info_scroll, scroll_draw and n do not match the expected structs!
+		
     }
 }
 

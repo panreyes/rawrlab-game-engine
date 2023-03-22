@@ -48,10 +48,12 @@ uint32_t drawing_stipple = 0xFFFFFFFF;
 /* --------------------------------------------------------------------------- */
 
 #ifdef __GNUC__
-#define _inline
+  #ifndef _libdraw_inline
+    #define _libdraw_inline
+  #endif
 #endif
 
-_inline void _HLine8_nostipple(uint8_t *ptr, uint32_t length) {
+_libdraw_inline void _HLine8_nostipple(uint8_t *ptr, uint32_t length) {
     if (pixel_alpha == 255) {
         memset(ptr, pixel_color8, length + 1);
     } else {
@@ -63,7 +65,7 @@ _inline void _HLine8_nostipple(uint8_t *ptr, uint32_t length) {
 
 /* --------------------------------------------------------------------------- */
 
-_inline void _HLine8_stipple(uint8_t *ptr, uint32_t length) {
+_libdraw_inline void _HLine8_stipple(uint8_t *ptr, uint32_t length) {
     register int n;
 
     if (pixel_alpha == 255) {
@@ -83,7 +85,7 @@ _inline void _HLine8_stipple(uint8_t *ptr, uint32_t length) {
 
 /* --------------------------------------------------------------------------- */
 
-_inline void _HLine16_nostipple(uint16_t *ptr, uint32_t length) {
+_libdraw_inline void _HLine16_nostipple(uint16_t *ptr, uint32_t length) {
     register int n;
 
     if (pixel_alpha == 255) {
@@ -97,7 +99,7 @@ _inline void _HLine16_nostipple(uint16_t *ptr, uint32_t length) {
 
 /* --------------------------------------------------------------------------- */
 
-_inline void _HLine16_stipple(uint16_t *ptr, uint32_t length) {
+_libdraw_inline void _HLine16_stipple(uint16_t *ptr, uint32_t length) {
     register int n;
 
     if (pixel_alpha == 255) {
@@ -117,7 +119,7 @@ _inline void _HLine16_stipple(uint16_t *ptr, uint32_t length) {
 
 /* --------------------------------------------------------------------------- */
 
-_inline void _HLine32_nostipple(uint32_t *ptr, uint32_t length) {
+_libdraw_inline void _HLine32_nostipple(uint32_t *ptr, uint32_t length) {
     register int n;
 
     if (pixel_alpha == 255 && (pixel_color32 & 0xff000000) == 0xff000000) {
@@ -189,7 +191,7 @@ _inline void _HLine32_nostipple(uint32_t *ptr, uint32_t length) {
 
 /* --------------------------------------------------------------------------- */
 
-_inline void _HLine32_stipple(uint32_t *ptr, uint32_t length) {
+_libdraw_inline void _HLine32_stipple(uint32_t *ptr, uint32_t length) {
     register int n;
 
     if (pixel_alpha == 255 && (pixel_color32 & 0xff000000) == 0xff000000) {

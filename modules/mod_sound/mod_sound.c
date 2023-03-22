@@ -65,58 +65,6 @@ extern DLVARFIXUP __pxtexport(mod_sound, globals_fixup)[];
 static Mix_Music **loaded_songs  = NULL;
 static Mix_Chunk **loaded_sounds = NULL;
 
-/* ------------------------------------- */
-/* Interfaz SDL_RWops Bennu              */
-/* ------------------------------------- */
-
-static Sint64 SDLCALL __modsound_seek_cb(SDL_RWops *context, Sint64 offset, int whence) {
-    if (file_seek(context->hidden.unknown.data1, offset, whence) < 0) {
-        return (-1);
-    }
-
-    return (file_pos(context->hidden.unknown.data1));
-}
-
-static size_t SDLCALL __modsound_read_cb(SDL_RWops *context, void *ptr, size_t size,
-                                         size_t maxnum) {
-    int ret = file_read(context->hidden.unknown.data1, ptr, size * maxnum);
-    if (ret > 0) {
-        ret /= size;
-    }
-
-    return (ret);
-}
-
-static size_t SDLCALL __modsound_write_cb(SDL_RWops *context, const void *ptr, size_t size,
-                                          size_t num) {
-    int ret = file_write(context->hidden.unknown.data1, (void *)ptr, size * num);
-    if (ret > 0)
-        ret /= size;
-    return (ret);
-}
-
-static int SDLCALL __modsound_close_cb(SDL_RWops *context) {
-    if (context) {
-        file_close(context->hidden.unknown.data1);
-        SDL_DestroyRW(context);
-    }
-
-    return (0);
-}
-
-static SDL_RWops *SDL_RWFromBGDFP(file *fp) {
-    SDL_RWops *rwops = SDL_CreateRW();
-    if (rwops != NULL) {
-        rwops->seek                 = __modsound_seek_cb;
-        rwops->read                 = __modsound_read_cb;
-        rwops->write                = __modsound_write_cb;
-        rwops->close                = __modsound_close_cb;
-        rwops->hidden.unknown.data1 = fp;
-    }
-
-    return (rwops);
-}
-
 /* --------------------------------------------------------------------------- */
 
 /*
@@ -292,19 +240,15 @@ static void sound_close() {
 static int32_t load_song(const char *filename) {
     Mix_Music *music = NULL;
     int32_t id;
-    file *fp;
 
     if (!audio_initialized && sound_init()) {
         return (0);
     }
 
-    if (!(fp = file_open(filename, "rb0"))) {
-        return (0);
-    }
+	SDL_RWops *rwops = SDL_RWFromFile(filename, "rb0");
 
-    SDL_RWops * rwops = SDL_RWFromBGDFP( fp );
     if ( !rwops ) {
-        file_close( fp );
+        SDL_RWclose(rwops);
         return( 0 );
     }
 
@@ -590,19 +534,15 @@ static int set_song_volume(int volume) {
 static int32_t load_wav(const char *filename) {
     Mix_Chunk *sound = NULL;
     int32_t id       = 0;
-    file *fp;
 
     if (!audio_initialized && sound_init()) {
         return (0);
     }
 
-    if (!(fp = file_open(filename, "rb0"))) {
-        return (0);
-    }
-
-    SDL_RWops * rwops = SDL_RWFromBGDFP( fp );
+	SDL_RWops *rwops = SDL_RWFromFile(filename, "rb0");
+	
     if ( !rwops ) {
-        file_close( fp );
+        SDL_RWclose(rwops);
         return( 0 );
     }
 

@@ -48,10 +48,10 @@
 /* ----------------------------------------------------------------- */
 /* Public functions                                                  */
 
+#ifndef NO_MODSHADER
 static SDL_bool shaders_supported = SDL_FALSE;
 static int      g_shaders_init = 0;
 
-#ifndef NO_MODSHADER
 #ifdef GLES2_SHADERS
     typedef struct GLES2_Context
     {

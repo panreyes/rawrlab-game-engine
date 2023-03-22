@@ -1373,9 +1373,9 @@ void gr_rotated_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, i
     _POINTF corners[4];
     _POINT min, max;
     VERTEX vertex[4];
-    SDL_Rect dstRect;
+    SDL_FRect dstRect;
     SDL_Rect clipRect;
-    SDL_Point rcenter;
+    SDL_FPoint rcenter;
     SDL_RendererFlip flip;
     SDL_BlendMode mode;
     Uint8 alpha;
@@ -1850,7 +1850,8 @@ void gr_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, uint8_t m
              uint8_t modb, GRAPH *gr, int shader) {
     _POINT min, max;
     _POINT center;
-    SDL_Rect dstRect;
+    SDL_FRect dstRect;
+	SDL_Rect dstRectTex;
     SDL_Rect clipRect;
     SDL_RendererFlip flip;
     SDL_BlendMode mode;
@@ -1954,7 +1955,9 @@ void gr_blit(GRAPH *dest, REGION *clip, int scrx, int scry, int flags, uint8_t m
                 SDL_SetTextureAlphaMod(piece->texture, alpha);
                 SDL_SetTextureColorMod(piece->texture, modr, modg, modb);
                 SDL_SetTextureBlendMode(piece->texture, mode);
-                SDL_QueryTexture(piece->texture, NULL, NULL, &dstRect.w, &dstRect.h);
+                SDL_QueryTexture(piece->texture, NULL, NULL, &dstRectTex.w, &dstRectTex.h);
+				dstRect.x = (float)dstRectTex.x;
+				dstRect.y = (float)dstRectTex.y;
                 SDL_RenderTextureRotated(renderer, piece->texture, NULL, &dstRect, 0., NULL, flip);
             }
             piece = piece->next;

@@ -46,7 +46,9 @@
 /* --------------------------------------------------------------------------- */
 
 #ifdef __GNUC__
-#define _inline inline
+  #ifndef _modkey_inline
+    #define _modkey_inline inline
+  #endif
 #endif
 
 /* --------------------------------------------------------------------------- */
@@ -62,7 +64,7 @@
  *      A non-zero positive value if the key is pressed, 0 otherwise
  */
 
-static _inline int _get_key(int code) {
+static _modkey_inline int _get_key(int code) {
     key_equiv *curr;
     int found = 0;
 

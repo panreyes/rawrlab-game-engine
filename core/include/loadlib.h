@@ -201,9 +201,12 @@ typedef struct { int index; } dlibhandle;
 
 static char *__dliberr = NULL;
 
+// The macro avoids an unused warning
+#ifndef __PXTB__
 static char *dliberror(void) {
     return __dliberr;
 }
+#endif
 
 static dlibhandle *dlibopen(const char *fname) {
     int i = 0;
