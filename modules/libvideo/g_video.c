@@ -103,13 +103,14 @@ int gr_set_icon(GRAPH *map) {
                 }
             }
 
-            ico = SDL_CreateRGBSurfaceFrom(icon->data, 32, 32, 8, 32, 0x00, 0x00, 0x00, 0x00);
+			ico = SDL_CreateSurfaceFrom(icon->data, 32, 32, 8, SDL_GetPixelFormatEnumForMasks(32, 0x00, 0x00, 0x00, 0x00));
 
             SDL_SetPaletteColors(ico->format->palette, palette, 0, 256);
         } else {
-            ico = SDL_CreateRGBSurfaceFrom(icon->data, 32, 32, icon->format->depth, icon->pitch,
-                                           icon->format->Rmask, icon->format->Gmask,
-                                           icon->format->Bmask, icon->format->Amask);
+            ico = SDL_CreateSurfaceFrom(icon->data, 32, 32, icon->format->depth, 
+                                           SDL_GetPixelFormatEnumForMasks( icon->pitch,
+                                              icon->format->Rmask, icon->format->Gmask,
+                                              icon->format->Bmask, icon->format->Amask));
         }
 
         SDL_SetWindowIcon(window, ico);
@@ -185,18 +186,18 @@ int gr_set_mode(int width, int height) {
 
     // Use the new & fancy SDL 2 routines
     if (!window) {
-        sdl_flags = SDL_WINDOW_SHOWN;
+        sdl_flags = 0;
         if (frameless) {
             sdl_flags |= SDL_WINDOW_BORDERLESS;
-        }
-        if (full_screen) {
-            sdl_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
         }
         if (grab_input) {
             sdl_flags |= SDL_WINDOW_MOUSE_GRABBED;
         }
-        window = SDL_CreateWindow(apptitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        /*
+		window = SDL_CreateWindow(apptitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                   surface_width, surface_height, sdl_flags);
+		*/
+		window = SDL_CreateWindow(apptitle, surface_width, surface_height, sdl_flags);
         if (!window) {
             PXTRTM_LOGERROR("Error creating window (%s)", SDL_GetError());
             return -1;
@@ -219,11 +220,16 @@ int gr_set_mode(int width, int height) {
             SDL_SetWindowBordered(window, SDL_FALSE);
         }
 
+/*
         if ((sdl_flags & SDL_WINDOW_FULLSCREEN_DESKTOP) && !full_screen) {
             SDL_SetWindowFullscreen(window, 0);
         } else if (!(sdl_flags & SDL_WINDOW_FULLSCREEN_DESKTOP) && full_screen) {
             SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
         }
+*/
+		if(full_screen) {
+			SDL_SetWindowFullscreen(window, SDL_TRUE);
+		}
 #endif
     }
 
@@ -264,7 +270,7 @@ int gr_set_mode(int width, int height) {
         // Use SDL_Renderer's batching capability (if present)
         SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
 #endif
-        renderer = SDL_CreateRenderer(window, -1, sdl_flags);
+        renderer = SDL_CreateRenderer(window, NULL, sdl_flags);
         if (!renderer) {
             PXTRTM_LOGERROR("Error creating renderer (%s)", SDL_GetError());
             SDL_DestroyWindow(window);
@@ -282,7 +288,8 @@ int gr_set_mode(int width, int height) {
         PXTRTM_LOG("Renderer info:\n");
         PXTRTM_LOG("==============\n");
         PXTRTM_LOG("Accelerated rendering: %d\n", (renderer_info.flags & SDL_RENDERER_ACCELERATED) > 0);
-        PXTRTM_LOG("Render to texture:     %d\n", (renderer_info.flags & SDL_RENDERER_TARGETTEXTURE) > 0);
+		//FIXME
+        //PXTRTM_LOG("Render to texture:     %d\n", (renderer_info.flags & SDL_RENDERER_TARGETTEXTURE) > 0);
         PXTRTM_LOG("Rendering driver:      %s\n", renderer_info.name);
         PXTRTM_LOG("VSYNC:                 %d\n", renderer_info.flags & SDL_RENDERER_PRESENTVSYNC);
         PXTRTM_LOG("Max texture size:      %dx%d\n", renderer_info.max_texture_width, renderer_info.max_texture_height);
@@ -299,7 +306,9 @@ int gr_set_mode(int width, int height) {
 
     // Enable SDL scaling, if needed
     if (renderer_width != width || renderer_height != height) {
-        SDL_SetRenderLogicalPresentation(renderer, width, height);
+		//FIXME: scale_mode, last param
+		SDL_SetRenderLogicalPresentation(renderer, width, height, SDL_LOGICAL_PRESENTATION_INTEGER_SCALE, SDL_SCALEMODE_NEAREST);
+		// FIXME! Find out about SDL_LOGICAL_PRESENTATION_INTEGER_SCALE and SDL_LOGICAL_PRESENTATION_DISABLED
         if(debug) {
             PXTRTM_LOG("Set logical size to: %dx%d\n", width, height);
         }
@@ -319,7 +328,7 @@ int gr_set_mode(int width, int height) {
     if (screen) {
         SDL_DestroySurface(screen);
     }
-    screen = SDL_CreateRGBSurface(0, width, height, texture_depth, Rmask, Gmask, Bmask, Amask);
+    screen = SDL_CreateSurface(width, height, SDL_GetPixelFormatEnumForMasks(texture_depth, Rmask, Gmask, Bmask, Amask));
 
     if (!sys_pixel_format) {
         sys_pixel_format = bitmap_create_format(32);
@@ -337,7 +346,7 @@ int gr_set_mode(int width, int height) {
 
     scr_initialized = 1;
 
-    SDL_ShowCursor(0);
+	SDL_HideCursor();
 
     pal_refresh(NULL);
     palette_changed = 1;

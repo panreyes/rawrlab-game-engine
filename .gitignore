@@ -16,3 +16,6 @@ build
 /modules/mod_nswitch/mod_nswitch.h
 /modules/mod_nswitch/mod_nswitch_symbols.h
 /nda_code
+/3rdparty/SDL3/build-mingw-x86
+/3rdparty/SDL3_mixer/CMakeFiles/cmake.check_cache
+/3rdparty/SDL3_mixer/CMakeCache.txt

@@ -42,7 +42,7 @@ fi
 # Valid values are:
 # Debug Release RelWithDebInfo MinSizeRel
 # Otherwise compile with Debug configuration
-BUILD_TYPE="Debug"
+BUILD_TYPE="Release"
 if [ $# -eq 1 ]; then
     BUILD_TYPE=$1
 fi

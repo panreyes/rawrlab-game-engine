@@ -77,14 +77,14 @@ void wm_events() {
     GLODWORD(libwm, EXIT_STATUS) = 0;
 
     /* Handle the plethora of events different systems can produce here */
-    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENT_QUIT, SDL_WINDOWEVENT) > 0) {
+    while (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENT_QUIT, SDL_EVENT_WINDOW_LAST) > 0) {
         switch (e.type) {
             case SDL_EVENT_QUIT:
                 /* UPDATE  exit status... initilized each frame */
                 GLODWORD(libwm, EXIT_STATUS) = 1;
                 break;
-            case SDL_WINDOWEVENT:
-                switch (e.window.event) {
+            case SDL_EVENT_WINDOW_FIRST ... SDL_EVENT_WINDOW_LAST:
+				switch (e.window.type) {
                     case SDL_EVENT_WINDOW_MINIMIZED:
                         GLODWORD(libwm, WINDOW_STATUS) = 0;
                         break;

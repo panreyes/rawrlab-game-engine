@@ -154,10 +154,12 @@ int modgamecontroller_getname(INSTANCE *my, int *params) {
 }
 
 int modgamecontroller_num(INSTANCE *my, int *params) {
-    int i;
     int game_controllers = 0;
+    int i;
+	int num_joysticks;
+	SDL_GetJoysticks(&num_joysticks);
     
-    for (i = 0; i < SDL_NumJoysticks(); ++i) {
+    for (i = 0; i < num_joysticks; ++i) {
         if (SDL_IsGamepad(i)) {
             game_controllers++;
         }

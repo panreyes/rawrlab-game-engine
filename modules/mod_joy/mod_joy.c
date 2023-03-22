@@ -150,18 +150,6 @@ int modjoy_hats(INSTANCE *my, int *params) {
 
 /* --------------------------------------------------------------------------- */
 /**
- * JOY_NUMBALLS ()
- *
- * Returns the total number of balls of the current selected joystick
- *
- **/
-
-int modjoy_balls(INSTANCE *my, int *params) {
-    return (libjoy_balls());
-}
-
-/* --------------------------------------------------------------------------- */
-/**
  * JOY_GETHAT (int HAT)
  *
  * Returns the state of the specfied hat on the current selected joystick
@@ -170,18 +158,6 @@ int modjoy_balls(INSTANCE *my, int *params) {
 
 int modjoy_get_hat(INSTANCE *my, int *params) {
     return (libjoy_get_hat(params[0]));
-}
-
-/* --------------------------------------------------------------------------- */
-/**
- * JOY_GETBALL (int BALL, int* dx, int* dy)
- *
- * Returns the state of the specfied ball on the current selected joystick
- *
- **/
-
-int modjoy_get_ball(INSTANCE *my, int *params) {
-    return (libjoy_get_ball(params[0], (int *)params[1], (int *)params[2]));
 }
 
 /* --------------------------------------------------------------------------- */
@@ -263,18 +239,6 @@ int modjoy_hats_specific(INSTANCE *my, int *params) {
 
 /* --------------------------------------------------------------------------- */
 /**
- * JOY_NUMBALLS (int JOY)
- *
- * Returns the total number of balls of the specified joystick
- *
- **/
-
-int modjoy_balls_specific(INSTANCE *my, int *params) {
-    return (libjoy_balls_specific(params[0]));
-}
-
-/* --------------------------------------------------------------------------- */
-/**
  * JOY_GETHAT (int JOY, int HAT)
  *
  * Returns the state of the specfied hat on the specified joystick
@@ -283,18 +247,6 @@ int modjoy_balls_specific(INSTANCE *my, int *params) {
 
 int modjoy_get_hat_specific(INSTANCE *my, int *params) {
     return (libjoy_get_hat_specific(params[0], params[1]));
-}
-
-/* --------------------------------------------------------------------------- */
-/**
- * JOY_GETBALL (int JOY, int BALL, int* dx, int* dy)
- *
- * Returns the state of the specfied ball on the specified joystick
- *
- **/
-
-int modjoy_get_ball_specific(INSTANCE *my, int *params) {
-    return (libjoy_get_ball_specific(params[0], params[1], (int *)params[2], (int *)params[3]));
 }
 
 /* --------------------------------------------------------------------------- */

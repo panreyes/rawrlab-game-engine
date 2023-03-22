@@ -74,16 +74,16 @@ SET(SDL3_SEARCH_PATHS
 	/opt/local # DarwinPorts
 	/opt/csw # Blastwave
 	/opt
+	../3rdparty/SDL3
 	../../3rdparty/SDL3
 	../../../3rdparty/SDL3
-	../../../../3rdparty/SDL3
 	${SDL3_PATH}
 )
 
-FIND_PATH(SDL3_INCLUDE_DIR SDL3/SDL.h
+FIND_PATH(SDL3_INCLUDE_DIR SDL.h
 	HINTS
 	$ENV{SDL3DIR}
-	PATH_SUFFIXES include
+	PATH_SUFFIXES include/SDL3 include
 	PATHS ${SDL3_SEARCH_PATHS}
 )
 

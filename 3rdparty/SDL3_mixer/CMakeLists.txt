@@ -195,6 +195,10 @@ if(NOT TARGET ${sdl3_target_name})
     find_package(SDL3 ${SDL_REQUIRED_VERSION} REQUIRED)
 endif()
 
+#RAWRLAB FIXES
+find_package(SDL3 ${SDL_REQUIRED_VERSION} REQUIRED)
+set(sdl3_target_name ${SDL3_LIBRARY})
+
 add_library(sdl3mixer_build_options INTERFACE)
 if(MSVC)
     target_compile_options(sdl3mixer_build_options INTERFACE /W2)
@@ -243,6 +247,7 @@ target_include_directories(SDL3_mixer
     PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3>"
+		"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../SDL3/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL3>"
     PRIVATE
@@ -255,7 +260,8 @@ target_compile_definitions(SDL3_mixer PRIVATE
     SDL_BUILD_MINOR_VERSION=${MINOR_VERSION}
     SDL_BUILD_MICRO_VERSION=${MICRO_VERSION}
 )
-target_link_libraries(SDL3_mixer PRIVATE $<BUILD_INTERFACE:${sdl3_target_name}>)
+#target_link_libraries(SDL3_mixer PRIVATE $<BUILD_INTERFACE:${sdl3_target_name}>)
+target_link_libraries(SDL3_mixer PRIVATE ${sdl3_target_name})
 target_link_libraries(SDL3_mixer PRIVATE $<BUILD_INTERFACE:sdl3mixer_build_options>)
 if(WIN32 AND BUILD_SHARED_LIBS)
     target_sources(SDL3_mixer PRIVATE

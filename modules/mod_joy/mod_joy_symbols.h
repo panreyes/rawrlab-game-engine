@@ -46,12 +46,8 @@ extern int modjoy_get_button( INSTANCE * my, int * params );
 extern int modjoy_get_button_specific( INSTANCE * my, int * params );
 extern int modjoy_hats( INSTANCE * my, int * params );
 extern int modjoy_hats_specific( INSTANCE * my, int * params );
-extern int modjoy_balls( INSTANCE * my, int * params );
-extern int modjoy_balls_specific( INSTANCE * my, int * params );
 extern int modjoy_get_hat( INSTANCE * my, int * params );
 extern int modjoy_get_hat_specific( INSTANCE * my, int * params );
-extern int modjoy_get_ball( INSTANCE * my, int * params );
-extern int modjoy_get_ball_specific( INSTANCE * my, int * params );
 extern int modjoy_get_accel( INSTANCE * my, int * params );
 extern int modjoy_get_accel_specific( INSTANCE * my, int * params );
 extern int modjoy_rumble( INSTANCE * my, int * params );
@@ -84,12 +80,8 @@ DLSYSFUNCS  __pxtexport( mod_joy, exported_functions )[] = {
 
     FUNC( "JOY_NUM_HATS"     , ""     , TYPE_INT    , modjoy_hats                  ),
     FUNC( "JOY_NUM_HATS"     , "I"    , TYPE_INT    , modjoy_hats_specific         ),   /* Added by Sandman */
-    FUNC( "JOY_NUM_BALLS"    , ""     , TYPE_INT    , modjoy_balls                 ),
-    FUNC( "JOY_NUM_BALLS"    , "I"    , TYPE_INT    , modjoy_balls_specific        ),   /* Added by Sandman */
     FUNC( "JOY_GET_HAT"      , "I"    , TYPE_INT    , modjoy_get_hat               ),
     FUNC( "JOY_GET_HAT"      , "II"   , TYPE_INT    , modjoy_get_hat_specific      ),   /* Added by Sandman */
-    FUNC( "JOY_GET_BALL"     , "IPP"  , TYPE_INT    , modjoy_get_ball              ),
-    FUNC( "JOY_GET_BALL"     , "IIPP" , TYPE_INT    , modjoy_get_ball_specific     ),   /* Added by Sandman */
 
     FUNC( "JOY_GET_ACCEL"    , "PPP"  , TYPE_INT    , modjoy_get_accel             ),
     FUNC( "JOY_GET_ACCEL"    , "IPPP" , TYPE_INT    , modjoy_get_accel_specific    ),

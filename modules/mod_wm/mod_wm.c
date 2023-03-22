@@ -120,15 +120,20 @@ int bgd_get_window_size(INSTANCE *my, int *params) {
 /* --------------------------------------------------------------------------- */
 
 int bgd_get_desktop_size(INSTANCE *my, int *params) {
+	/*
+	FIXME!!!
+	
     SDL_DisplayMode mode;
 
-    if (SDL_GetDesktopDisplayMode(0, &mode) < 0)
+	mode = SDL_GetDesktopDisplayMode(0);
+    if (!mode.w < -1)
         return -1;
 
     if (params[0])
         *((int *)(params[0])) = mode.w;
     if (params[1])
         *((int *)(params[1])) = mode.h;
+	*/
 
     return 1;
 }
@@ -175,9 +180,9 @@ void bgd_show_messagebox(INSTANCE *my, int *params) {
 
 void bgd_window_enable_text_drop(INSTANCE *my, int *params) {
     if(params[0]){
-        SDL_EventState(SDL_EVENT_DROP_FILE, SDL_ENABLE);
+        SDL_SetEventEnabled(SDL_EVENT_DROP_FILE, SDL_TRUE);
     } else {
-        SDL_EventState(SDL_EVENT_DROP_FILE, SDL_DISABLE);
+        SDL_SetEventEnabled(SDL_EVENT_DROP_FILE, SDL_FALSE);
     }
 }
 

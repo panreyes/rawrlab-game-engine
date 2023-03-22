@@ -49,17 +49,20 @@ SET(SDL3_SEARCH_PATHS
     /opt/local # DarwinPorts
     /opt/csw # Blastwave
     /opt
+	../../3rdparty/SDL3_mixer
+	../../../3rdparty/SDL3_mixer
+	../../../../3rdparty/SDL3_mixer
 )
 
 if(NOT SDL3_MIXER_INCLUDE_DIR AND SDL3MIXER_INCLUDE_DIR)
   set(SDL3_MIXER_INCLUDE_DIR ${SDL3MIXER_INCLUDE_DIR} CACHE PATH "directory cache
 entry initialized from old variable name")
 endif()
-find_path(SDL3_MIXER_INCLUDE_DIR SDL_mixer.h
+find_path(SDL3_MIXER_INCLUDE_DIR SDL3/SDL_mixer.h
   HINTS
     ENV SDL3MIXERDIR
     ENV SDL3DIR
-  PATH_SUFFIXES include include/SDL3
+  PATH_SUFFIXES include
   PATHS ${SDL3_SEARCH_PATHS}
 )
 
@@ -72,7 +75,7 @@ find_library(SDL3_MIXER_LIBRARY
   HINTS
     ENV SDL3MIXERDIR
     ENV SDL3DIR
-  PATH_SUFFIXES lib64 lib lib/i386-linux-gnu
+  PATH_SUFFIXES lib64 lib lib/i386-linux-gnu build-mingw-x86
   PATHS ${SDL3_SEARCH_PATHS}
 )
 

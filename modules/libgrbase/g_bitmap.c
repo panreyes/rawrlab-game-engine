@@ -149,7 +149,7 @@ GRAPH *bitmap_new_ex(int code, int w, int h, int depth, void *data, int pitch) {
             format = SDL_PIXELFORMAT_RGB565;
         }
         gr->texture = SDL_CreateTexture(
-            renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_RENDERER_TARGETTEXTURE, w, h);
+            renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, w, h);
         if (!gr->texture) {
             free(gr);
             PXTRTM_LOGERROR("bitmap_new_ex: Could not create GRAPH texture (%s)", SDL_GetError());
@@ -236,7 +236,7 @@ GRAPH *bitmap_new(int code, int w, int h, int depth) {
         // than the limit allowed by the graphics card
         if (w <= renderer_info.max_texture_width && h <= renderer_info.max_texture_height) {
             gr->texture = SDL_CreateTexture(
-                renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_RENDERER_TARGETTEXTURE, w, h);
+                renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, w, h);
             if (!gr->texture) {
                 if (gr->data) {
                     free(gr->data);
@@ -254,7 +254,7 @@ GRAPH *bitmap_new(int code, int w, int h, int depth) {
             _w          = MIN(renderer_info.max_texture_width, w);
             _h          = MIN(renderer_info.max_texture_height, h);
             gr->texture = SDL_CreateTexture(
-                renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_RENDERER_TARGETTEXTURE, _w, _h);
+                renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, _w, _h);
             if (!gr->texture) {
                 if (gr->data)
                     free(gr->data);
@@ -295,7 +295,7 @@ GRAPH *bitmap_new(int code, int w, int h, int depth) {
                              : renderer_info.max_texture_height;
 
                     piece->texture = SDL_CreateTexture(
-                        renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_RENDERER_TARGETTEXTURE, _w,
+                        renderer, format, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, _w,
                         _h);
                     if (!piece->texture) {
                         PXTRTM_LOGERROR("bitmap_new: Could not create GRAPH texture (%s)\n", SDL_GetError());
