@@ -1,4 +1,5 @@
 # README
+Abandoned in favor of [BennuGD2](https://github.com/SplinterGU/BennuGD2)
 RAWRLAB Games Engine (or RGE) is a 2D portable videogame engine with a code syntax based on DIV Games Studio.
 
 RAWRLAB Games Engine is a fork of [PixTudio](https://github.com/panreyes/pixtudio), created by [Pablo Navarro](https://github.com/panreyes) to adapt the engine to SDL3 and to support some [RAWRLAB Games](https://www.rawrlab.com/) projects.
